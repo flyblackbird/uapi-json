@@ -40,26 +40,26 @@ module.exports = settings => {
   const service = (0, _AirService2.default)((0, _validateServiceSettings2.default)(settings));
   const log = settings.options && settings.options.logFunction || console.log;
   return {
-    shop: function shop(options) {
-      return service.searchLowFares(options);
+    shop: function shop(options, configOptions) {
+      return service.searchLowFares(options, configOptions);
     },
-    fareRules: function fareRules(options) {
+    fareRules: function fareRules(options, configOptions) {
       // add request for fare rules
       const request = Object.assign(options, {
         fetchFareRules: true
       });
-      return service.lookupFareRules(request);
+      return service.lookupFareRules(request, configOptions);
     },
-    toQueue: function toQueue(options) {
-      return service.gdsQueue(options);
+    toQueue: function toQueue(options, configOptions) {
+      return service.gdsQueue(options, configOptions);
     },
-    book: function book(options) {
+    book: function book(options, configOptions) {
       return service.airPricePricingSolutionXML(options).then(data => {
         const bookingParams = Object.assign({}, {
           ticketDate: (0, _moment2.default)().add(3, 'hours').format(),
           ActionStatusType: 'TAU'
         }, data, options);
-        return service.createReservation(bookingParams).catch(err => {
+        return service.createReservation(bookingParams, configOptions).catch(err => {
           if (err instanceof _AirErrors.AirRuntimeError.SegmentBookingFailed || err instanceof _AirErrors.AirRuntimeError.NoValidFare) {
             if (options.allowWaitlist) {
               // will not have a UR if waitlisting restricted

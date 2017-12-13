@@ -48,7 +48,7 @@ module.exports = function uapiRequest(
     throw new RequestRuntimeError.TemplateFileMissing();
   }
 
-  return function serviceFunc(params) {
+  return function serviceFunc(params, configOptions = {}) {
     if (debugMode) {
       log('Input params ', pd.json(params));
     }
@@ -147,6 +147,13 @@ module.exports = function uapiRequest(
       return result;
     };
 
+    // return XML response directly if specified
+    if (configOptions.XML) {
+      return validateInput()
+        .then(handlebars.compile)
+        .then(template => prepareRequest(template, auth, params))
+        .then(sendRequest);
+    }
 
     return validateInput()
       .then(handlebars.compile)

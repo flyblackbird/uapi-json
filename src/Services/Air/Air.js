@@ -13,31 +13,31 @@ module.exports = (settings) => {
   const service = airService(validateServiceSettings(settings));
   const log = (settings.options && settings.options.logFunction) || console.log;
   return {
-    shop(options) {
-      return service.searchLowFares(options);
+    shop(options, configOptions) {
+      return service.searchLowFares(options, configOptions);
     },
 
-    fareRules(options) {
+    fareRules(options, configOptions) {
       // add request for fare rules
       const request = Object.assign(options,
         {
           fetchFareRules: true,
         }
       );
-      return service.lookupFareRules(request);
+      return service.lookupFareRules(request, configOptions);
     },
 
-    toQueue(options) {
-      return service.gdsQueue(options);
+    toQueue(options, configOptions) {
+      return service.gdsQueue(options, configOptions);
     },
 
-    book(options) {
+    book(options, configOptions) {
       return service.airPricePricingSolutionXML(options).then((data) => {
         const bookingParams = Object.assign({}, {
           ticketDate: moment().add(3, 'hours').format(),
           ActionStatusType: 'TAU',
         }, data, options);
-        return service.createReservation(bookingParams).catch((err) => {
+        return service.createReservation(bookingParams, configOptions).catch((err) => {
           if (err instanceof AirRuntimeError.SegmentBookingFailed
               || err instanceof AirRuntimeError.NoValidFare) {
             if (options.allowWaitlist) { // will not have a UR if waitlisting restricted

@@ -56,6 +56,8 @@ module.exports = function uapiRequest(service, auth, reqType, rootObject, valida
   }
 
   return function serviceFunc(params) {
+    let configOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
     if (debugMode) {
       log('Input params ', _prettyData.pd.json(params));
     }
@@ -147,6 +149,11 @@ module.exports = function uapiRequest(service, auth, reqType, rootObject, valida
       }
       return result;
     };
+
+    // return XML response directly if specified
+    if (configOptions.XML) {
+      return validateInput().then(_handlebars2.default.compile).then(template => (0, _prepareRequest2.default)(template, auth, params)).then(sendRequest);
+    }
 
     return validateInput().then(_handlebars2.default.compile).then(template => (0, _prepareRequest2.default)(template, auth, params)).then(sendRequest).then(parseResponse).then(validateSOAP).then(parseFunction.bind(uParser)) // TODO merge Hotels
     .then(handleSuccess);
