@@ -69,11 +69,17 @@ function formatTrip(segment, flightDetails) {
   const plane = flightInfo.map(details => details.Equipment || 'Unknown');
   const duration = flightInfo.map(details => details.FlightTime || 0);
   const techStops = flightInfo.slice(1).map(details => details.Origin);
+  const onTimePerformance = flightInfo.map(details => details.OnTimePerformance)[0];
+  const originTerminal = flightInfo.map(details => details.OriginTerminal)[0];
+  const destinationTerminal = flightInfo.map(details => details.DestinationTerminal)[0];
   return {
     ...formatSegment(segment),
     plane,
     duration,
     techStops,
+    onTimePerformance,
+    originTerminal,
+    destinationTerminal,
   };
 }
 
