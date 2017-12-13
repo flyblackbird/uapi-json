@@ -15,12 +15,14 @@ const params = {
     {
       from: 'LWO',
       to: 'JKT',
-      departureDate: '2018-07-18'
+      departureDate: '2018-07-18',
+      preferCity: false,
     },
     {
       from: 'JKT',
       to: 'IEV',
       departureDate: '2018-07-21',
+      preferCity: false,
     },
   ],
   passengers: {
@@ -34,6 +36,10 @@ const params = {
   cabins: ['Economy'], // ['Business'],
   requestId: '4e2fd1f8-2221-4b6c-bb6e-cf05c367cf60',
   maxJourneyTime: 300,
+  preferNonStop: true,
+  // orderBy: 'JourneyTime', // valid options are JourneyTime, DepartureTime , ArrivalTime
+  allowChangeOfAirport: true,
+  maxSolutions: 30,
   pricing: {
     currency: 'USD',
     // eTicketability: true,

@@ -14,10 +14,10 @@ module.exports = `
             {{#legs}}
             <air:SearchAirLeg>
                 <air:SearchOrigin>
-                    <com:CityOrAirport Code="{{from}}" PreferCity="true"/>
+                    <com:CityOrAirport Code="{{from}}" PreferCity="{{preferCity}}"/>
                 </air:SearchOrigin>
                 <air:SearchDestination>
-                    <com:CityOrAirport Code="{{to}}" PreferCity="true"/>
+                    <com:CityOrAirport Code="{{to}}" PreferCity="{{preferCity}}"/>
                 </air:SearchDestination>
                 <air:SearchDepTime PreferredTime="{{departureDate}}"/>
                 <air:AirLegModifiers>
@@ -32,8 +32,20 @@ module.exports = `
             </air:SearchAirLeg>
             {{/legs}}
             <air:AirSearchModifiers
+                {{#if allowChangeOfAirport}}
+                    AllowChangeOfAirport="{{allowChangeOfAirport}}"
+                {{/if}}
                 {{#if maxJourneyTime}}
                     MaxJourneyTime="{{maxJourneyTime}}"
+                {{/if}}
+                {{#if orderBy}}
+                    OrderBy="{{orderBy}}"
+                {{/if}}
+                {{#if maxSolutions}}
+                    MaxSolutions="{{maxSolutions}}"
+                {{/if}}
+                {{#if preferNonStop}}
+                    PreferNonStop="{{preferNonStop}}"
                 {{/if}}
             >
                 <air:PreferredProviders>
@@ -48,7 +60,6 @@ module.exports = `
                 {{#if pricing.currency}}
                 CurrencyType="{{pricing.currency}}"
                 {{/if}}
-
                 {{#if pricing.eTicketability}}
                 ETicketability="{{pricing.eTicketability}}"
                 {{/if}}
