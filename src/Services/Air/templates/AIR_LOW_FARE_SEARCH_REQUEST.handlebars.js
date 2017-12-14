@@ -14,10 +14,29 @@ module.exports = `
             {{#legs}}
             <air:SearchAirLeg>
                 <air:SearchOrigin>
-                    <com:CityOrAirport Code="{{from}}" PreferCity="{{preferCity}}"/>
+
+                  {{#if preferCity}}
+                    <com:CityOrAirport
+                      Code="{{from}}"
+                      PreferCity="true"
+                    />
+                  {{else}}
+                    <com:Airport
+                      Code="{{from}}"
+                    />
+                  {{/if}}
                 </air:SearchOrigin>
                 <air:SearchDestination>
-                    <com:CityOrAirport Code="{{to}}" PreferCity="{{preferCity}}"/>
+                  {{#if preferCity}}
+                    <com:CityOrAirport
+                      Code="{{to}}"
+                      PreferCity="true"
+                    />
+                  {{else}}
+                    <com:Airport
+                      Code="{{to}}"
+                    />
+                  {{/if}}
                 </air:SearchDestination>
                 <air:SearchDepTime PreferredTime="{{departureDate}}"/>
                 <air:AirLegModifiers>
@@ -32,9 +51,7 @@ module.exports = `
             </air:SearchAirLeg>
             {{/legs}}
             <air:AirSearchModifiers
-                {{#if allowChangeOfAirport}}
-                    AllowChangeOfAirport="{{allowChangeOfAirport}}"
-                {{/if}}
+                AllowChangeOfAirport="{{allowChangeOfAirport}}"
                 {{#if maxJourneyTime}}
                     MaxJourneyTime="{{maxJourneyTime}}"
                 {{/if}}
@@ -51,6 +68,46 @@ module.exports = `
                 <air:PreferredProviders>
                     <com:Provider Code="1G" xmlns:com="http://www.travelport.com/schema/common_v33_0"/>
                 </air:PreferredProviders>
+
+                {{#if permittedCarriers.length}}
+                  <air:PermittedCarriers>
+                      {{#each permittedCarriers}}
+                        <com:Carrier Code="{{this}}"/>
+                      {{/each}}
+                  </air:PermittedCarriers>
+                {{/if}}
+
+                {{#if prohibitedCarriers.length}}
+                  <air:ProhibitedCarriers>
+                      {{#each prohibitedCarriers}}
+                        <com:Carrier Code="{{this}}"/>
+                      {{/each}}
+                  </air:ProhibitedCarriers>
+                {{/if}}
+
+                {{#if preferredCarriers.length}}
+                  <air:PreferredCarriers>
+                      {{#each preferredCarriers}}
+                        <com:Carrier Code="{{this}}"/>
+                      {{/each}}
+                  </air:PreferredCarriers>
+                {{/if}}
+
+                {{#if flightType}}
+                <air:FlightType
+                    {{#if flightType.maxStops}}
+                    MaxStops="{{flightType.maxStops}}"
+                    {{/if}}
+
+                    {{#if flightType.maxConnections}}
+                    MaxConnections="{{flightType.maxConnections}}"
+                    {{/if}}
+
+                    {{#if flightType.nonStopDirects}}
+                    NonStopDirects="{{flightType.nonStopDirects}}"
+                    {{/if}}
+                />
+                {{/if}}
             </air:AirSearchModifiers>
             {{#passengers}}
             <com:SearchPassenger Code="{{ageCategory}}"{{#if child}} Age="9"{{/if}} xmlns:com="http://www.travelport.com/schema/common_v33_0"/>
