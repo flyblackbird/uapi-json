@@ -139,7 +139,13 @@ const rateParse = function (rsp) {
     }
 
     if (rate['hotel:HotelRateDetail']) {
-      agregator.RateDetail = rate['hotel:HotelRateDetail'].map((detail) => {
+      let rateDetails = rate['hotel:HotelRateDetail'];
+      // rate['hotel:HotelRateDetail'] is not an array in some cases
+      if (Array.isArray(rate['hotel:HotelRateDetail']) === false) {
+        rateDetails = [rate['hotel:HotelRateDetail']];
+      }
+
+      agregator.RateDetail = rateDetails.map((detail) => {
         const roomRate = {};
 
         detail['hotel:RoomRateDescription'].forEach((roomrate) => {
