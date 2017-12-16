@@ -21,6 +21,17 @@ module.exports = function (settings) {
       debug,
       options
     ),
+    searchGalileo: uApiRequest(
+      config.HotelsService.url,
+      auth,
+      templates.searchGalileo,
+      'hotel:HotelSearchAvailabilityRsp',
+      HotelsValidator.HOTELS_SEARCH_REQUEST_GALILEO,
+      HotelsParser.HOTELS_ERROR,
+      HotelsParser.HOTELS_SEARCH_REQUEST_GALILEO,
+      debug,
+      options
+    ),
     rates: uApiRequest(
       config.HotelsService.url,
       auth,

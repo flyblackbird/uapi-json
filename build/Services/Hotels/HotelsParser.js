@@ -96,6 +96,44 @@ const searchParse = function searchParse(rsp) {
   return result;
 };
 
+const searchGalileoParse = function searchGalileoParse(rsp) {
+  const self = this;
+  const result = {};
+
+  result.nextResult = getNextResult(self.uapi_version, rsp);
+  result.HostToken = getHostToken(self.uapi_version, rsp);
+
+  if (rsp['hotel:HotelSearchResult']) {
+    result.hotels = rsp['hotel:HotelSearchResult'].map(elem => {
+      const hotel = {};
+      const property = elem['hotel:HotelProperty'];
+      hotel.Name = Utils.beautifyName(property.Name);
+      hotel.Address = property['hotel:PropertyAddress']['hotel:Address'];
+      hotel.HotelCode = property.HotelCode;
+      hotel.HotelChain = property.HotelChain;
+      hotel.VendorLocationKey = property.VendorLocationKey;
+      // hotel.Description = elem['hotel:PropertyDescription']._;
+      hotel.Icon = getIcon(self.uapi_version, elem);
+      // hotel.HotelRating = property['hotel:HotelRating']['hotel:Rating'] * 1;
+      hotel.Rates = elem['hotel:RateInfo'].map(rate => ({
+        RateSupplier: rate.RateSupplier,
+        RateSupplierLogo: rate.RateSupplierLogo,
+        PaymentType: rate.PaymentType,
+        ApproximateMinimumStayAmount: Utils.price(rate.ApproximateMinimumStayAmount)
+      }));
+      hotel.Suppliers = hotel.Rates.map(rate => rate.RateSupplier);
+      hotel.Amenties = getAmenties(property);
+      // hotel.Location = {
+      //   lat: property[`common_${self.uapi_version}:CoordinateLocation`].latitude,
+      //   lng: property[`common_${self.uapi_version}:CoordinateLocation`].longitude
+      // };
+
+      return hotel;
+    });
+  }
+  return result;
+};
+
 const rateParse = function rateParse(rsp) {
   const rateobj = rsp;
   const result = {};
@@ -252,6 +290,7 @@ const errorHandler = function errorHandler(err) {
 module.exports = {
   HOTELS_ERROR: errorHandler,
   HOTELS_SEARCH_REQUEST: searchParse,
+  HOTELS_SEARCH_REQUEST_GALILEO: searchGalileoParse,
   HOTELS_RATE_REQUEST: rateParse,
   HOTELS_BOOK_REQUEST: bookParse,
   HOTELS_CANCEL_BOOK_REQUEST: cancelBookParse

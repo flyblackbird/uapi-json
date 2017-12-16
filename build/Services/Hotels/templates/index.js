@@ -29,7 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   book: _HOTELS_BOOK_REQUEST2.default,
   rate: _HOTELS_RATE_REQUEST2.default,
-  searchGalielo: _HOTELS_SEARCH_GALILEO_REQUEST2.default,
+  searchGalileo: _HOTELS_SEARCH_GALILEO_REQUEST2.default,
   search: _HOTELS_SEARCH_REQUEST2.default,
   universalRecordCancelUR: _UNIVERSAL_RECORD_CANCEL_UR2.default
 };

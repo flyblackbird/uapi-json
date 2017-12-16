@@ -237,6 +237,15 @@ module.exports = {
             .rooms()
             .end();
   },
+
+  HOTELS_SEARCH_REQUEST_GALILEO(params) {
+    return new Validator(params)
+            .code()
+            .location()
+            .startDate()
+            .endDate()
+            .end();
+  },
   HOTELS_RATE_REQUEST(params) {
     return new Validator(params)
             .hotelChain()
