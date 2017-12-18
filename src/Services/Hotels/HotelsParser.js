@@ -18,9 +18,15 @@ const getHostToken = (version, obj) => {
 
 const getAmenties = (property) => {
   if (property && property['hotel:Amenities']) {
-    return property['hotel:Amenities']['hotel:Amenity'].map(e => ({
-      [e.Code]: amenties[e.Code],
-    }));
+    return property['hotel:Amenities']['hotel:Amenity'].map((e) => {
+      if (amenties[e.Code]) {
+        return {
+          [e.Code]: amenties[e.Code],
+        };
+      }
+      return null;
+    })
+    .filter(e => !!e);
   }
   return [];
 };
