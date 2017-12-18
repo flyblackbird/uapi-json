@@ -12,7 +12,13 @@ module.exports = `
         </com:NextResultReference>
         {{/nextResult}}
       <hot:HotelSearchLocation>
-        <hot:HotelLocation Location="{{location}}"/>
+        {{#if location}}
+          <hot:HotelLocation Location="{{location}}"/>
+        {{/if}}
+
+        {{#if code}}
+          <hot:ProviderLocation ProviderCode="TRM" Location="{{code}}" />
+        {{/if}}
 
         {{#if address}}
           <hot:HotelAddress
@@ -26,14 +32,14 @@ module.exports = `
         {{/if}}
 
         {{#if coordinateLocation}}
-          <hot:CoordinateLocation
+          <com:CoordinateLocation
               latitude="{{coordinateLocation.latitude}}"
               longitude="{{coordinateLocation.longitude}}"
           />
         {{/if}}
 
         {{#if distance}}
-          <hot:Distance
+          <com:Distance
               Value="{{distance.value}}"
           />
         {{/if}}
