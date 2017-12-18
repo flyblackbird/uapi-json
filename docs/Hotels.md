@@ -137,7 +137,7 @@ Each rate object can be cloned from *rate* response.
 Has next shape:
 
 | Param | Type |
-| --- | --- | --- |
+| --- | --- |
 | RatePlanType | `String`
 | RateSupplier | `String`
 | RateOfferId | `String`

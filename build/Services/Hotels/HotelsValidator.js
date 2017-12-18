@@ -232,7 +232,7 @@ module.exports = {
     return new Validator(params).code().location().startDate().endDate().rooms().end();
   },
   HOTELS_SEARCH_REQUEST_GALILEO: function HOTELS_SEARCH_REQUEST_GALILEO(params) {
-    return new Validator(params).code().location().startDate().endDate().end();
+    return new Validator(params).startDate().endDate().end();
   },
   HOTELS_RATE_REQUEST: function HOTELS_RATE_REQUEST(params) {
     return new Validator(params).hotelChain().hotelCode().startDate().endDate().rooms().end();
