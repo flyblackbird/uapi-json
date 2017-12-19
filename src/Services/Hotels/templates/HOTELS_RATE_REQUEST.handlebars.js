@@ -21,11 +21,13 @@ module.exports = `
                     <hot:CheckinDate>{{startDate}}</hot:CheckinDate>
                     <hot:CheckoutDate>{{endDate}}</hot:CheckoutDate>
                 </hot:HotelStay>
-                <hot:PermittedAggregators>
-                {{#each Suppliers}}
-                   <hot:Aggregator Name="{{this}}"/>
-                {{/each}}
-                </hot:PermittedAggregators>
+                {{#if Suppliers.length}}
+                  <hot:PermittedAggregators>
+                    {{#each Suppliers}}
+                       <hot:Aggregator Name="{{this}}"/>
+                    {{/each}}
+                  </hot:PermittedAggregators>
+                {{/if}}
                 <hot:BookingGuestInformation>
                   {{#rooms}}
                     <hot:Room>
