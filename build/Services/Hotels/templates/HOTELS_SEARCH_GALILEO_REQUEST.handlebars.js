@@ -20,17 +20,6 @@ module.exports = `
           <hot:ProviderLocation ProviderCode="TRM" Location="{{code}}" />
         {{/if}}
 
-        {{#if address}}
-          <hot:HotelAddress
-            {{#if address.city}}
-              City="{{address.city}}"
-            {{/if}}
-            {{#if address.postalCode}}
-              PostalCode="{{address.postalCode}}"
-            {{/if}}
-          />
-        {{/if}}
-
         {{#if coordinateLocation}}
           <com:CoordinateLocation
               latitude="{{coordinateLocation.latitude}}"
@@ -45,10 +34,28 @@ module.exports = `
         {{/if}}
 
       </hot:HotelSearchLocation>
-      <hot:HotelSearchModifiers AvailableHotelsOnly="true" {{#currency}} PreferredCurrency="{{.}}" {{/currency}} NumberOfAdults="{{NumberOfAdults}}" NumberOfRooms="{{NumberOfRooms}}">
+      <hot:HotelSearchModifiers
+        AvailableHotelsOnly="true"
+        {{#currency}} PreferredCurrency="{{.}}" {{/currency}}
+        NumberOfAdults="{{NumberOfAdults}}"
+        NumberOfRooms="{{NumberOfRooms}}"
+        ReturnPropertyDescription="true"
+      >
         <com:PermittedProviders xmlns:com="http://www.travelport.com/schema/common_v34_0">
           <com:Provider Code="1G"/>
         </com:PermittedProviders>
+
+        {{#if hotelName}}
+          <hot:HotelName>{{hotelName}}</hot:HotelName>
+        {{/if}}
+
+        {{#if rating}}
+        <hot:HotelRating RatingProvider="TRM">
+          {{#each rating}}
+          <hot:Rating>{{this}}</hot:Rating>
+          {{/each}}
+        </hot:HotelRating>
+        {{/if}}
         {{#children.length}}
         <hot:NumberOfChildren Count="{{children.length}}">
           {{#children}}

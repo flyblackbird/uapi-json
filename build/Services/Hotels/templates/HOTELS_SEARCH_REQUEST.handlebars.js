@@ -21,10 +21,19 @@ module.exports = `
         {{/if}}
 
       </hot:HotelSearchLocation>
-      <hot:HotelSearchModifiers MaxWait="{{#MaxWait}}{{.}}{{/MaxWait}}{{^MaxWait}}15000{{/MaxWait}}" AvailableHotelsOnly="true" ReturnPropertyDescription="true" MaxProperties="{{#MaxProperties}}{{.}}{{/MaxProperties}}{{^MaxProperties}}30{{/MaxProperties}}" {{#currency}} PreferredCurrency="{{.}}" {{/currency}}>
+      <hot:HotelSearchModifiers
+        MaxWait="{{#MaxWait}}{{.}}{{/MaxWait}}{{^MaxWait}}15000{{/MaxWait}}"
+        AvailableHotelsOnly="true"
+        ReturnPropertyDescription="true"
+        MaxProperties="{{#MaxProperties}}{{.}}{{/MaxProperties}}{{^MaxProperties}}30{{/MaxProperties}}"
+        {{#currency}} PreferredCurrency="{{.}}" {{/currency}}
+      >
         <com:PermittedProviders xmlns:com="http://www.travelport.com/schema/common_v34_0">
           <com:Provider Code="TRM"/>
         </com:PermittedProviders>
+        {{#if hotelName}}
+          <hot:HotelName>{{hotelName}}</hot:HotelName>
+        {{/if}}
         {{#if rating}}
         <hot:HotelRating RatingProvider="TRM">
           {{#each rating}}
