@@ -124,7 +124,8 @@ const searchGalileoParse = function searchGalileoParse(rsp) {
         RateSupplier: rate.RateSupplier,
         RateSupplierLogo: rate.RateSupplierLogo,
         PaymentType: rate.PaymentType,
-        ApproximateMinimumStayAmount: Utils.price(rate.ApproximateMinimumStayAmount)
+        ApproximateMaximumtayAmount: Utils.price(rate.MaximumAmount),
+        ApproximateMinimumStayAmount: Utils.price(rate.MinimumAmount)
       }));
       hotel.Suppliers = hotel.Rates.map(rate => rate.RateSupplier);
       hotel.Amenties = getAmenties(property);
