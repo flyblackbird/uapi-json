@@ -16,8 +16,7 @@ module.exports = `
             {{#legs}}
             <air:SearchAirLeg>
                 <air:SearchOrigin>
-
-                  {{#if preferCity}}
+                  {{#if originPreferCity}}
                     <com:CityOrAirport
                       Code="{{from}}"
                       PreferCity="true"
@@ -29,7 +28,7 @@ module.exports = `
                   {{/if}}
                 </air:SearchOrigin>
                 <air:SearchDestination>
-                  {{#if preferCity}}
+                  {{#if destinationPreferCity}}
                     <com:CityOrAirport
                       Code="{{to}}"
                       PreferCity="true"
@@ -53,7 +52,16 @@ module.exports = `
             </air:SearchAirLeg>
             {{/legs}}
             <air:AirSearchModifiers
-                AllowChangeOfAirport="{{allowChangeOfAirport}}"
+                {{#if allowChangeOfAirport}}
+                  AllowChangeOfAirport="true"
+                {{else}}
+                  AllowChangeOfAirport="false"
+                {{/if}}
+                {{#if excludeOpenJawAirport}}
+                  ExcludeOpenJawAirport="true"
+                {{else}}
+                  ExcludeOpenJawAirport="false"
+                {{/if}}
                 {{#if maxJourneyTime}}
                     MaxJourneyTime="{{maxJourneyTime}}"
                 {{/if}}
