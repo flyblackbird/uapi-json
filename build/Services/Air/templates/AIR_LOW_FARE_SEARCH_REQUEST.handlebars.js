@@ -104,19 +104,34 @@ module.exports = `
                 {{/if}}
 
                 {{#if flightType}}
-                <air:FlightType
-                    {{#if flightType.maxStops}}
-                    MaxStops="{{flightType.maxStops}}"
+                  <air:FlightType
+                    {{#if flightType.MaxStops}}
+                        MaxStops="{{flightType.maxStops}}"
                     {{/if}}
 
                     {{#if flightType.maxConnections}}
-                    MaxConnections="{{flightType.maxConnections}}"
+                      MaxConnections="{{flightType.maxConnections}}"
                     {{/if}}
 
                     {{#if flightType.nonStopDirects}}
-                    NonStopDirects="{{flightType.nonStopDirects}}"
+                      NonStopDirects="{{flightType.nonStopDirects}}"
                     {{/if}}
-                />
+                  />
+                {{/if}}
+                {{#if maxLayoverDuration}}
+                  <air:MaxLayoverDuration
+                    {{#if maxLayoverDuration.domestic}}
+                      Domestic="{{maxLayoverDuration.domestic}}"
+                    {{/if}}
+
+                    {{#if maxLayoverDuration.gateway}}
+                      Gateway="{{maxLayoverDuration.gateway}}"
+                    {{/if}}
+
+                    {{#if maxLayoverDuration.international}}
+                      International="{{maxLayoverDuration.international}}"
+                    {{/if}}
+                  />
                 {{/if}}
             </air:AirSearchModifiers>
             {{#passengers}}
